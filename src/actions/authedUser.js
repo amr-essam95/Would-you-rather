@@ -6,3 +6,13 @@ export function setAuthedUser (id) {
       	id
     }
 }
+
+export function handleSetAuthedUser (id) {
+	return (dispatch) => {
+
+      	return new Promise((resolve, reject) => {
+      		dispatch(setAuthedUser(id));
+      		resolve();
+    	});
+    }
+}

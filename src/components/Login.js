@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setAuthedUser } from '../actions/authedUser'
+import { handleSetAuthedUser } from '../actions/authedUser'
 import { withRouter } from 'react-router-dom'
 
 
@@ -25,9 +25,9 @@ class Login extends Component {
 	submitUser = (event) => {
     	event.preventDefault()
       	const { dispatch } = this.props
-        this.props.history.push(`/new`)
-        dispatch(setAuthedUser(this.state.selectedUser))
-      	
+        dispatch(handleSetAuthedUser(this.state.selectedUser)).then(() => {
+			this.props.history.push('/')
+		})      	
     }
   
   render() {

@@ -1,4 +1,4 @@
-import { formatQuestion, _saveQuestion, _saveQuestionAnswer } from '../utils/_DATA'
+import { _saveQuestion, _saveQuestionAnswer } from '../utils/_DATA'
 import { showLoading, hideLoading } from 'react-redux-loading'
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
@@ -17,10 +17,12 @@ export function handleAddQuestion (option1, option2) {
     	const { authedUser } = getState()
         
         dispatch(showLoading())
-      
-      	const question = formatQuestion(option1, option2, authedUser)
-      
-      	return _saveQuestion(question)
+      	const info = {
+        	optionOneText:option1,
+			optionTwoText:option2,
+			author:authedUser
+        }
+      	return _saveQuestion(info)
       	.then((question) => dispatch(addQuestion(question)))
       	.then(() => dispatch(hideLoading()))
     }

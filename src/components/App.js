@@ -23,19 +23,18 @@ class App extends Component {
 			<Router>
 				<Fragment>
 					<LoadingBar/>
-					<div className="d-flex flex-column">
-						{this.props.authedUser !== ''  && this.props.authedUser !== null && 
-							<div className="d-flex justify-content-center">
-								<Nav/>
-							</div>}
+					<div className="d-flex flex-column"> 
+						<div className="d-flex justify-content-center">
+							<Nav/>
+						</div>
 						{this.props.loading === true
 							? null
-							: <div className="d-flex justify-content-center">
-								<Route path='/' exact component={Login} />
-								<PrivateRoute path='/home' component={QuestionsBoard} />
+							: <div className="d-flex justify-content-center ">
+          						<Route path='/login' component={Login} />
+          						<PrivateRoute path='/' exact component={QuestionsBoard} />
 								<PrivateRoute path='/question/:id' component={QuestionPage} />
-								<PrivateRoute path='/new' component={NewQuestion} />
-								<PrivateRoute path='/board' component={LeaderBoard} />
+								<PrivateRoute path='/add' component={NewQuestion} />
+								<PrivateRoute path='/leaderboard' component={LeaderBoard} />
 							</div>}
 					</div>
 				</Fragment>

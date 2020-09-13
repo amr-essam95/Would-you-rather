@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -10,41 +10,44 @@ class Nav extends Component {
     e.preventDefault()
     const { dispatch } = this.props
   	dispatch(setAuthedUser(''))
-    this.props.history.push(`/`)
+    this.props.history.push(`/login`)
   }
   
   render() {
-    const { authedUser } = this.props
-    console.log('authedUser', authedUser)
+    const { authedUser, users } = this.props
     return (
       <nav className='nav'>
         <ul>
           <li>
-            <NavLink to='/home' exact activeClassName='active'>
+            <NavLink to='/' exact activeClassName='active'>
               Home
             </NavLink>
           </li>
           <li>
-            <NavLink to='/new' activeClassName='active'>
+            <NavLink to='/add' activeClassName='active'>
               New Question
             </NavLink>
           </li>
               <li>
-            <NavLink to='/board' activeClassName='active'>
+            <NavLink to='/leaderboard' activeClassName='active'>
               Leader Board
             </NavLink>
           </li>
-          <li>
-      		Hello, {this.props.authedUserName}
-          </li>
-		  <li>
-			<img src={this.props.authedUserAvatar} alt={this.props.authedUserName} className="md-avatar rounded-circle smallImage"/>
-		  </li>
-          <li>
-            <NavLink to='#' onClick={this.logout} activeClassName='active'>
-              Logout
-            </NavLink>
-          </li>
+      		{authedUser !== '' && authedUser !== undefined && authedUser !== null &&
+      			(<Fragment>
+                    <li>
+                        Hello, {users[authedUser].name}
+                    </li>
+                    <li>
+                        <img src={users[authedUser].avatarURL} alt={users[authedUser].name} className="md-avatar rounded-circle smallImage"/>
+                    </li>
+					<li>
+						<NavLink to='#' onClick={this.logout} activeClassName='active'>
+							Logout
+						</NavLink>
+					</li>
+				</Fragment>)
+      		}
         </ul>
       </nav>
     )
@@ -53,16 +56,9 @@ class Nav extends Component {
 
 function mapStateToProps ({ users, authedUser }) {
 
-    if (!users.hasOwnProperty(authedUser)) {
-    	return {}
-    }
-    const user = users[authedUser]
-    console.log('user', user)
-  	console.log('avatar', user.avatarURL)
 	return {
-      	authedUser,
-    	authedUserName: user.name,
-      	authedUserAvatar: user.avatarURL
+      	users,
+      	authedUser
     }
 }
 

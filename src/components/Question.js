@@ -8,7 +8,7 @@ import { handleSubmitAnswer } from '../actions/questions'
 class Question extends Component {
   
   state = {
-    selectedOption: 'optionTwo'
+    selectedOption: 'optionOne'
   }
   
    toQuestion = (e, id) => {
